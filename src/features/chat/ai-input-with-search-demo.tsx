@@ -4,7 +4,7 @@ import { AIInputWithSearch } from "@/features/chat/ai-input-with-search";
 
 export function AIInputWithSearchDemo() {
   return (
-    <div className="min-w-[550px]">
+    <div className="min-w-[950px]">
       <div>
         <AIInputWithSearch
           onSubmit={(value, withSearch) => {
