@@ -31,7 +31,6 @@ export function AIInputWithSearch({
     minHeight,
     maxHeight,
   });
-  const [showSearch, setShowSearch] = useState(true);
 
   const handleSubmit = () => {
     if (value.trim()) {
@@ -40,13 +39,6 @@ export function AIInputWithSearch({
       adjustHeight(true);
     }
   };
-
-  //   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     const file = e.target.files?.[0];
-  //     if (file) {
-  //       onFileSelect?.(file);
-  //     }
-  //   };
 
   return (
     <div className={cn("w-full py-4", className)}>
@@ -60,7 +52,7 @@ export function AIInputWithSearch({
               id={id}
               value={value}
               placeholder={placeholder}
-              className="w-full rounded-2xl rounded-b-none px-4 py-3 bg-black/5 dark:bg-white/5 border-none dark:text-white placeholder:text-black/70 dark:placeholder:text-white/70 resize-none focus-visible:ring-0 leading-[1.2]"
+              className="w-full rounded-3xl rounded-b-none px-4 py-3 bg-black/5 dark:bg-white/5 border-none dark:text-white placeholder:text-black/70 dark:placeholder:text-white/70 resize-none focus-visible:ring-0 leading-[1.2]"
               ref={textareaRef}
               onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
                 if (e.key === "Enter" && !e.shiftKey) {
@@ -75,7 +67,7 @@ export function AIInputWithSearch({
             />
           </div>
 
-          <div className="h-12 bg-black/5 dark:bg-white/5 rounded-b-2xl">
+          <div className="h-12 bg-black/5 dark:bg-white/5 rounded-b-3xl">
             <div className="absolute left-3 bottom-3 flex items-center gap-2">
               {/* <label className="cursor-pointer rounded-lg p-2 bg-black/5 dark:bg-white/5">
                 <input
@@ -87,10 +79,9 @@ export function AIInputWithSearch({
               </label> */}
               <button
                 type="button"
-                // onClick={() => setShowSearch(!showSearch)}
                 className={cn(
                   "rounded-full cursor-default transition-all flex items-center gap-2 px-1.5 py-1 border h-8",
-                  showSearch
+                  true
                     ? "bg-sky-500/15 border-sky-400 text-sky-500"
                     : "bg-black/5 dark:bg-white/5 border-transparent text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white"
                 )}
@@ -98,8 +89,8 @@ export function AIInputWithSearch({
                 <div className="w-4 h-4 flex items-center justify-center flex-shrink-0">
                   <motion.div
                     animate={{
-                      rotate: showSearch ? 0 : 180,
-                      scale: showSearch ? 1.1 : 1,
+                      rotate: true ? 0 : 180,
+                      scale: true ? 1.1 : 1,
                     }}
                     transition={{
                       type: "spring",
@@ -110,13 +101,13 @@ export function AIInputWithSearch({
                     <Telescope
                       className={cn(
                         "w-4 h-4",
-                        showSearch ? "text-sky-500" : "text-inherit"
+                        true ? "text-sky-500" : "text-inherit"
                       )}
                     />
                   </motion.div>
                 </div>
                 <AnimatePresence>
-                  {showSearch && (
+                  {true && (
                     <motion.span
                       initial={{ width: 0, opacity: 0 }}
                       animate={{
