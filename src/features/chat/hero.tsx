@@ -27,11 +27,16 @@ function Hero() {
       <div className="container mx-auto">
         <div className="flex gap-8 mb-20 items-center justify-center flex-col">
           <div>
-            <Button asChild variant="secondary" size="sm" className="gap-4">
-              <Link href="https://github.com/Serjobas/odr.dev">
-                <Github /> View on Github
-                <MoveRight className="w-4 h-4" />
-              </Link>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="gap-4"
+              onClick={() =>
+                window.open("https://github.com/serjobas/odr.dev", "_blank")
+              }
+            >
+              <Github /> View on Github
+              <MoveRight className="w-4 h-4" />
             </Button>
           </div>
           <div className="flex gap-4 flex-col">
