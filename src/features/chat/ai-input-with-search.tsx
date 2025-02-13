@@ -1,6 +1,6 @@
 "use client";
 
-import { Globe, Telescope, Send } from "lucide-react";
+import { Telescope, Square, ArrowUp } from "lucide-react";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,11 +22,10 @@ export function AIInputWithSearch({
   placeholder = "Search the web...",
   minHeight = 48,
   maxHeight = 164,
-  onSubmit,
-  onFileSelect,
   className,
 }: AIInputWithSearchProps) {
   const [value, setValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { textareaRef, adjustHeight } = useAutoResizeTextarea({
     minHeight,
     maxHeight,
@@ -34,7 +33,8 @@ export function AIInputWithSearch({
 
   const handleSubmit = () => {
     if (value.trim()) {
-      onSubmit?.(value, showSearch);
+      setIsLoading(true);
+      // onSubmit?.(value, showSearch);
       setValue("");
       adjustHeight(true);
     }
@@ -52,7 +52,7 @@ export function AIInputWithSearch({
               id={id}
               value={value}
               placeholder={placeholder}
-              className="w-full rounded-3xl rounded-b-none px-4 py-3 bg-black/5 dark:bg-white/5 border-none dark:text-white placeholder:text-black/70 dark:placeholder:text-white/70 resize-none focus-visible:ring-0 leading-[1.2]"
+              className="w-full rounded-3xl rounded-b-none px-4 py-4 bg-black/5 dark:bg-white/5 border-none dark:text-white placeholder:text-black/70 dark:placeholder:text-white/70 resize-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 leading-[1.2]"
               ref={textareaRef}
               onKeyDown={(e: React.KeyboardEvent<HTMLTextAreaElement>) => {
                 if (e.key === "Enter" && !e.shiftKey) {
@@ -67,16 +67,8 @@ export function AIInputWithSearch({
             />
           </div>
 
-          <div className="h-12 bg-black/5 dark:bg-white/5 rounded-b-3xl">
-            <div className="absolute left-3 bottom-3 flex items-center gap-2">
-              {/* <label className="cursor-pointer rounded-lg p-2 bg-black/5 dark:bg-white/5">
-                <input
-                  type="file"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
-                <Paperclip className="w-4 h-4 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors" />
-              </label> */}
+          <div className="pb-2 bg-black/5 dark:bg-white/5 rounded-b-3xl flex justify-between px-4">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
                 className={cn(
@@ -124,18 +116,28 @@ export function AIInputWithSearch({
                 </AnimatePresence>
               </button>
             </div>
-            <div className="absolute right-3 bottom-3">
+            <div className="">
               <button
                 type="button"
-                onClick={handleSubmit}
+                onClick={() => {
+                  if (!!value.trim()) {
+                    handleSubmit();
+                  } else if (isLoading) {
+                    setIsLoading(false);
+                  }
+                }}
                 className={cn(
-                  "rounded-lg p-2 transition-colors",
-                  value
-                    ? "bg-sky-500/15 text-sky-500"
-                    : "bg-black/5 dark:bg-white/5 text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white"
+                  "rounded-3xl w-9 h-9 flex items-center justify-center transition-colors",
+                  value || isLoading
+                    ? "bg-black text-white dark:bg-white dark:text-black"
+                    : "bg-black/5 dark:bg-white/5 text-black/40 dark:text-white/40 cursor-default"
                 )}
               >
-                <Send className="w-4 h-4" />
+                {isLoading ? (
+                  <Square fill="currentColor" className="w-4 h-4" />
+                ) : (
+                  <ArrowUp className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
